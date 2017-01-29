@@ -1,7 +1,7 @@
 // 1 - add single state object - store shopping list
 
 var state = {
-    items: []
+    items: ['bread','eggs']
 };
 
 // 2 - add function to modify the state = store items added
@@ -33,4 +33,8 @@ var renderList = function(state, element){ // element = DOM element that will st
         renderList(state,$('.shopping-list'));
         //alert("test");
     });
+
+    $(function(){
+        renderList(state,$('.shopping-list'));
+    })
 

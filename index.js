@@ -14,7 +14,7 @@ var addItem = function(state, addedItem) {
 
 var renderList = function(state, element){ // element = DOM element that will store the new construct
     var itemsHTML = state.items.map(function(newItem) {    // map() = new array
-        return '<li><span class="shopping-item">' + newItem + '</span><div class="shopping-item-controls">' +
+        return '<li id="' + newItem + '"><span class="shopping-item">' + newItem + '</span><div class="shopping-item-controls">' +
         '<button class="shopping-item-toggle"><span class="button-label">check</span></button>' +
         '<button class="shopping-item-delete"><span class="button-label">delete</span></button></div></li>'
 
@@ -22,6 +22,8 @@ var renderList = function(state, element){ // element = DOM element that will st
     // insert constructed items
     element.html(itemsHTML); // overwrite element existing html with itemsHTML
 }
+
+$(function(){
 
 // 4 - Event Listener(s) to capture the added element, then create element (call addItem and renderList)
 //     Use jQuery - check form class for submit
@@ -31,10 +33,22 @@ var renderList = function(state, element){ // element = DOM element that will st
         // add triggered functions
         addItem(state, $('#shopping-list-entry').val());
         renderList(state,$('.shopping-list'));
-        //alert("test");
+         //alert("test");
     });
 
-    $(function(){
-        renderList(state,$('.shopping-list'));
-    })
+// 5 - add event listener to existing item (Shopping-list)  to handle deletion (click on new button .shopping-item-delete)
+
+    $('.shopping-list').on('click', '.shopping-item-delete', function(event){ // NB remember .shopping-item-delete is not jquery item - single quotes only
+        //event.stopPropagation();
+        var itemToDelete = $(this).closest('li').attr('id');
+        //alert($(this).closest('li').attr('id'));
+        //alert(itemToDelete);
+        //alert($.inArray(itemToDelete, state.items));
+        this.closest('li').remove();
+        state.items.splice($.inArray(itemToDelete, state.items),1); //use splice and inArray to retrieve index by id  (for ex. "bread") and remove item from object state
+        
+    });
+
+    renderList(state,$('.shopping-list'));
+})
 

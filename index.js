@@ -49,6 +49,12 @@ $(function(){
         
     });
 
+// 6 - add event listener to existing item (Shopping-list)  to handle "checking" (click on new button .shopping-item-toggle) - add class .shopping-item__checked
+
+    $('.shopping-list').on('click', '.shopping-item-toggle', function(event){ // NB remember .shopping-item-toggle is not jquery item - single quotes only 
+        $(this).closest('li').addClass('shopping-item__checked');    
+    });
+
     renderList(state,$('.shopping-list'));
 })
 
